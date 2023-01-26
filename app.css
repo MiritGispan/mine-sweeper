@@ -1,0 +1,57 @@
+h2 {
+  color: #0077CC;
+  text-align: center;
+  margin:15px;
+  margin-bottom: 10px;
+} 
+
+
+footer {
+  color:black;
+  font-size:larger;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 5px;
+}
+
+
+body {
+  margin: auto;
+  text-align: center;
+  align-items: center;
+  background-color:lightskyblue;
+  width: 600px;
+  height: 900px;
+  padding-top: 30px;
+  box-shadow: inset 4px 3px 20px 7px rgb(125, 122, 122);
+}
+
+.btn {
+  margin-top: 20px;
+  background-color: blue;
+  color: white;
+}
+
+
+table {
+  margin: auto;
+  position: relative;
+}
+
+
+.game-container {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.cell{
+ 
+  text-align: center;
+  width: 35px;
+  height: 35px;
+  border: 2px solid rgb(71, 71, 71);
+  background-color: rgb(146, 147, 148);
+
+}
+

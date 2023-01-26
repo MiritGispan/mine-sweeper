@@ -1,18 +1,37 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mine Sweeper</title>
+    <link rel="stylesheet" href="css/app.css">
+
 </head>
-<body onload="init()" >
-    <h2>Time Passed: <span>0</span></h2>
+
+<body onload="init()">
+    <h1>💥 Mine Sweeper 💥</h1>
     <div class="board-container"></div>
     <div class="modal">
-        <button> RESTART</button>
+        <div class="row form">
+            <div class="col-12">
+                <button class="btn btn-md btn-dark" onclick="init()">Restart game</button> <br>
+                <button class="btn btn-md btn-dark" onclick="changeLevel(1)">Easy</button>
+                <button class="btn btn-md btn-dark" onclick="changeLevel(2)">Medium</button>
+                <button class="btn btn-md btn-dark" onclick="changeLevel(3)">Extreme</button>
+            </div>
+            <div>
+                <h2>Time Passed:
+                    <span class="timer">0.000</span><span>s</span>
+                </h2>
+            </div>
+            <footer>Mirit Gispan</footer>
+        </div>
     </div>
+    <table class="board"></table>
     <script src="js/utils.js"></script>
     <script src="js/game.js"></script>
 </body>
-</html>
+</html
