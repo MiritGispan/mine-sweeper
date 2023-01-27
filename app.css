@@ -26,18 +26,16 @@ body {
   box-shadow: inset 4px 3px 20px 7px rgb(125, 122, 122);
 }
 
-.btn {
-  margin-top: 20px;
-  background-color: blue;
-  color: white;
-}
-
-
 table {
   margin: auto;
   position: relative;
 }
 
+.btn {
+  margin-top: 20px;
+  background-color: blue;
+  color: white;
+}
 
 .game-container {
   text-align: center;
