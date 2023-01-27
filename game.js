@@ -4,15 +4,12 @@ console.log('Sprint 1')
 
 const MINE = '💣'
 const EMPTY = 0
-const btnMain = '😊'
-
 const GAME_BOARD_CELL = '⬜️'
 const NEIGHBORS_ICONS = ['⏹', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣']
 var gMinesArray = []
 var gFlagsArray = []
-var timerInterval
-
-
+var gCountTotalNeighbors = 0
+var gCountClickedNrighbors = 0
 const gGame = {
     isOn: false,
     shownCount: 0,
@@ -26,7 +23,6 @@ const gLevel = {
 var gBoard
 var gameBoard
 var gIsGameOn
-
 function init() {
     console.log('game started')
     gBoard = buildBoard()
@@ -34,6 +30,9 @@ function init() {
     gameBoard = buildGameBoard()
     renderBoard(gameBoard)
     gGame.isOn = true
+    startTimer()
+    const elCell = document.querySelector(`.game-status`)
+    elCell.innerText = 'Lets Play😀'
 }
 function buildBoard() {
     const board = []
@@ -62,17 +61,33 @@ function buildGameBoard() {
     }
     return board
 }
+function updateClickedNeghibers(cellContent) {
+    gCountClickedNrighbors = gCountClickedNrighbors + cellContent
+    const isGameFinished = checkGameOver()
+    if (checkGameOver()) {
+        setGameOver('WIN');
+    }
+}
 
 function checkGameOver() {
+    if (gCountClickedNrighbors === gCountTotalNeighbors)
+        return true;
+    var countSimilarElement = 0
     if (gMinesArray.length === gFlagsArray.length) {
         for (var i = 0; i < gFlagsArray.length; i++) {
-            if (!DoesArrayContionsArray(gMinesArray, gFlagsArray[i])) {
-                return false;
+            for (var j = 0; j < gMinesArray.length; j++) {
+                if (DoesArraiesAreEquals(gFlagsArray[i], gMinesArray[j])) {
+                    countSimilarElement++
+                }
             }
         }
+        if (gMinesArray.length === countSimilarElement) {
+            return true;
+        }
     }
-    return true;
+    return false;
 }
+
 function setMinesNegsCount(board) {
     console.log(gBoard)
     for (var k = 0; k < gMinesArray.length; k++) {
@@ -85,6 +100,7 @@ function setMinesNegsCount(board) {
                 if (j < 0 || j >= gBoard[i].length) continue
                 if (gBoard[i][j] !== MINE) {
                     gBoard[i][j]++
+                    gCountTotalNeighbors++
                 }
             }
         }
@@ -93,8 +109,20 @@ function setMinesNegsCount(board) {
 function checkgBoardCellContent(i, j) {
     return gBoard[i][j];
 }
-function setGameOver() {
+function setGameOver(gameStatus) {
     gGame.isOn = false
+    stopTimer()
+    var elTimer = document.querySelector('.timer')
+    elTimer.innerText = 'Time: 0'
+    if (gameStatus === 'WIN') {
+        const elCell = document.querySelector(`.game-status`)
+        elCell.innerText = 'WINNER! 😎'
+        showAllBoard('WIN');
+    }
+    else if (gameStatus === 'LOSE') {
+        const elCell = document.querySelector(`.game-status`)
+        elCell.innerText = 'GAME OVER 😒'
+    }
 }
 function changeLevel(level) {
     if (level === 1) {
@@ -112,17 +140,20 @@ function changeLevel(level) {
     init();
 }
 function addFlag(i, j) {
+
     gFlagsArray.push([i, j])
     const isGameFinished = checkGameOver()
     if (isGameFinished) {
-        setGameOver()
+        setGameOver('WIN')
     }
 }
 function removeFlag(i, j) {
+
     const indexOfCell = gFlagsArray.indexOf([i, j])
+
     gFlagsArray.splice(indexOfCell, 1)
     const isGameFinished = checkGameOver()
     if (isGameFinished) {
-        setGameOver()
+        setGameOver('WIN')
     }
 }

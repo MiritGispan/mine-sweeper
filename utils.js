@@ -16,25 +16,32 @@ function renderBoard(mat) {
     const elContainer = document.querySelector('.board-container')
     elContainer.innerHTML = strHTML
 }
- //Called when a cell is clicked(left click)
+
 function onCellClicked(elCell,i, j) {
     const cellContent = checkgBoardCellContent(i,j);
-    if(cellContent === 0){ //cell has no neighboars
+
+    if(cellContent === 0){ 
         elCell.innerText ='⏹'
         expandShown(i, j)
     }
-    else if(cellContent === MINE){ //cell has mine
+    else if(cellContent === MINE){ 
         elCell.innerText = MINE
         console.log("game-over")
-        setGameOver();
+        showAllBoard('LOSE');
+        setGameOver('LOSE');
     }
-    else{ //cell has neighboars
+    else{ 
         elCell.innerText =NEIGHBORS_ICONS[cellContent]
+        updateClickedNeghibers(cellContent)
     }
+
 }
- //Called when a cell is clicked(right click)
+
+
 function onRightClicked(elCell,i, j) {
+    
     const isFlag =  onCellMarked(elCell)
+
     if(isFlag){
         removeFlag(i,j)
     }
@@ -42,20 +49,22 @@ function onRightClicked(elCell,i, j) {
         addFlag(i,j)
     }
 }
-//Called when a cell is rightclickedee how you can hide the context menu on right click
+
+
 function onCellMarked(elCell) {
     const isFlag = elCell.innerText === '🚩'
     if(isFlag ){
         elCell.innerText =GAME_BOARD_CELL
     }
     else{
-        elCell.innerText = '🚩'
+        elCell.innerText ='🚩'
     }
     return isFlag
 }
-//When user clicks a cell with no mines around, we need to open not only that cell, but also its neighbors.
-//NOTE: start with a basic implementation that only opens the non-mine 1st degree neighbors
+
+
 function expandShown(firstIndex, secondIndex){
+    
     for(var i = firstIndex - 1; i <= firstIndex + 1; i++){
         if(i < 0 || i >= gBoard.length) continue
         for(var j = secondIndex - 1; j <= secondIndex + 1; j++){
@@ -64,10 +73,12 @@ function expandShown(firstIndex, secondIndex){
                 const cellContent = checkgBoardCellContent(i,j);
                 const elCell = document.querySelector(`.cell-${i}-${j}`)
                 elCell.innerText = NEIGHBORS_ICONS[cellContent]
+                updateClickedNeghibers(cellContent)
         }
     }
 }
-function getRandomNubers(min, max) { //return array of uniqe indexs (in the size of)
+
+function getRandomNubers(min, max) { 
     const output =[];
     output.push([Math.floor(Math.random() * (max - min + 1)) + min,Math.floor(Math.random() * (max - min + 1)) + min])
     while(output.length < gLevel.MINES){
@@ -78,7 +89,8 @@ function getRandomNubers(min, max) { //return array of uniqe indexs (in the size
     }
     return output
 }
-function DoesArrayContionsArray(a, b) { //a is an Array of Arraies , b is just an Array. exmple: a=[[0,1],[1,1]] b= [0,1]
+
+function DoesArrayContionsArray(a, b) { 
     for(var i=0; i<a.length; i++){
         if(DoesArraiesAreEquals(a[i], b)){
             return true
@@ -86,7 +98,8 @@ function DoesArrayContionsArray(a, b) { //a is an Array of Arraies , b is just a
   }
   return false
 }
-function DoesArraiesAreEquals(a, b) { //a is an Array and b is an Array. exmple: a=[1,1] b= [0,1]
+
+function DoesArraiesAreEquals(a, b) { 
     if(a.length !== b.length){
         return false;
     }
@@ -96,4 +109,22 @@ function DoesArraiesAreEquals(a, b) { //a is an Array and b is an Array. exmple:
         }
     }
     return true
+  }
+
+  function showAllBoard(gameStatus){
+    for(var i=0; i< gBoard.length; i++){
+        for (var j=0; j<gBoard.length; j++){
+            const cellContent = checkgBoardCellContent(i,j);
+            const elCell = document.querySelector(`.cell-${i}-${j}`)
+            if(cellContent === MINE){
+                if(gameStatus === 'LOSE' || cellContent !==  '🚩' ){
+                    elCell.innerText = MINE
+                }
+            }
+            else{
+                elCell.innerText = NEIGHBORS_ICONS[cellContent]
+            }
+        }
+    }
+
   }

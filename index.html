@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -7,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mine Sweeper</title>
-    <link rel="stylesheet" href="css/app.css">
-
 </head>
 
 <body onload="init()">
-    <h1>💥 Mine Sweeper 💥</h1>
+    <h2>💥 Mine Sweeper💥</h2>
+    <h1 class="game-status">Lets Play😀</h1>
+    <link rel="stylesheet" href="css/app.css">
     <div class="board-container"></div>
     <div class="modal">
         <div class="row form">
@@ -22,10 +21,9 @@
                 <button class="btn btn-md btn-dark" onclick="changeLevel(2)">Medium</button>
                 <button class="btn btn-md btn-dark" onclick="changeLevel(3)">Extreme</button>
             </div>
+            ​
             <div>
-                <h2>Time Passed:
-                    <span class="timer">0.000</span><span>s</span>
-                </h2>
+                <span class="timer">Time</span>
             </div>
             <footer>Mirit Gispan</footer>
         </div>
@@ -33,5 +31,7 @@
     <table class="board"></table>
     <script src="js/utils.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/timer.js"></script>
 </body>
-</html
+
+</html>
