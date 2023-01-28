@@ -1,28 +1,30 @@
-
 'use strict'
-console.log('Sprint 1')
 
 const MINE = '💣'
 const EMPTY = 0
 const GAME_BOARD_CELL = '⬜️'
 const NEIGHBORS_ICONS = ['⏹', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣']
+const FLAG = '🚩'
 var gMinesArray = []
 var gFlagsArray = []
 var gCountTotalNeighbors = 0
-var gCountClickedNrighbors = 0
+var gCountClickedNeighbors = 0
+var gScore = 0;
+var gBoard
+var gameBoard 
+var gIsGameOn
+var gLives = 3
+var gDarkMode = false
 const gGame = {
-    isOn: false,
-    shownCount: 0,
-    markedCount: 0,
-    secsPassed: 0
+    isOn: false, 
+    shownCount: 0, 
+    markedCount: 0, 
+    secsPassed: 0 
 }
 const gLevel = {
     SIZE: 4,
     MINES: 2
 }
-var gBoard
-var gameBoard
-var gIsGameOn
 function init() {
     console.log('game started')
     gBoard = buildBoard()
@@ -32,7 +34,12 @@ function init() {
     gGame.isOn = true
     startTimer()
     const elCell = document.querySelector(`.game-status`)
-    elCell.innerText = 'Lets Play😀'
+    elCell.innerText = '😀'
+    if (gLives === 3) {
+        const elCell = document.querySelector(`.lives`)
+        elCell.innerText = 'LIVES: ❤️❤️❤️'
+    }
+    gCountClickedNeighbors = 0
 }
 function buildBoard() {
     const board = []
@@ -42,7 +49,7 @@ function buildBoard() {
             board[i][j] = EMPTY
         }
     }
-
+   
     gMinesArray = []
     const randNum = getRandomNubers(0, gLevel.SIZE - 1)
     for (var i = 0; i < randNum.length; i++) {
@@ -51,7 +58,7 @@ function buildBoard() {
     }
     return board
 }
-function buildGameBoard() {
+function buildGameBoard() { 
     const board = []
     for (var i = 0; i < gLevel.SIZE; i++) {
         board.push([])
@@ -62,35 +69,18 @@ function buildGameBoard() {
     return board
 }
 function updateClickedNeghibers(cellContent) {
-    gCountClickedNrighbors = gCountClickedNrighbors + cellContent
-    const isGameFinished = checkGameOver()
-    if (checkGameOver()) {
-        setGameOver('WIN');
+    if (cellContent >= 1) {
+        gCountClickedNeighbors = gCountClickedNeighbors + cellContent
     }
-}
-
-function checkGameOver() {
-    if (gCountClickedNrighbors === gCountTotalNeighbors)
-        return true;
-    var countSimilarElement = 0
-    if (gMinesArray.length === gFlagsArray.length) {
-        for (var i = 0; i < gFlagsArray.length; i++) {
-            for (var j = 0; j < gMinesArray.length; j++) {
-                if (DoesArraiesAreEquals(gFlagsArray[i], gMinesArray[j])) {
-                    countSimilarElement++
-                }
-            }
-        }
-        if (gMinesArray.length === countSimilarElement) {
-            return true;
-        }
+    if (gCountClickedNeighbors === gCountTotalNeighbors) {
+        setGameOver('WIN')
     }
-    return false;
 }
 
 function setMinesNegsCount(board) {
     console.log(gBoard)
-    for (var k = 0; k < gMinesArray.length; k++) {
+    gCountTotalNeighbors = 0
+    for (var k = 0; k < gMinesArray.length; k++) { 
         var firstIndex = gMinesArray[k][0]
         var secondIndex = gMinesArray[k][1]
         for (var i = firstIndex - 1; i <= firstIndex + 1; i++) {
@@ -118,18 +108,27 @@ function setGameOver(gameStatus) {
         const elCell = document.querySelector(`.game-status`)
         elCell.innerText = 'WINNER! 😎'
         showAllBoard('WIN');
+        gScore++
+        var elTimer = document.querySelector('.score')
+        elTimer.innerText = gScore
+        gCountClickedNeighbors = 0
     }
     else if (gameStatus === 'LOSE') {
         const elCell = document.querySelector(`.game-status`)
         elCell.innerText = 'GAME OVER 😒'
+        gScore = 0
+        var elTimer = document.querySelector('.score')
+        elTimer.innerText = gScore
+        gCountClickedNeighbors = 0
     }
+    gLives = 3
 }
 function changeLevel(level) {
     if (level === 1) {
         gLevel.SIZE = 4,
             gLevel.MINES = 2
     }
-    else if (level === 2) {
+    else if (level === 2) { 
         gLevel.SIZE = 8,
             gLevel.MINES = 14
     }
@@ -137,23 +136,17 @@ function changeLevel(level) {
         gLevel.SIZE = 12,
             gLevel.MINES = 32
     }
-    init();
+    init(); 
 }
 function addFlag(i, j) {
 
     gFlagsArray.push([i, j])
-    const isGameFinished = checkGameOver()
-    if (isGameFinished) {
-        setGameOver('WIN')
-    }
+    checkIfUserWin()
 }
 function removeFlag(i, j) {
 
     const indexOfCell = gFlagsArray.indexOf([i, j])
 
     gFlagsArray.splice(indexOfCell, 1)
-    const isGameFinished = checkGameOver()
-    if (isGameFinished) {
-        setGameOver('WIN')
-    }
+    checkIfUserWin()
 }
