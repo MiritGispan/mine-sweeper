@@ -1,37 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Mine Sweeper</title>
-</head>
-
-<body onload="init()">
-    <h2>💥 Mine Sweeper💥</h2>
-    <h1 class="game-status">Lets Play😀</h1>
-    <link rel="stylesheet" href="css/app.css">
-    <div class="board-container"></div>
-    <div class="modal">
-        <div class="row form">
-            <div class="col-12">
-                <button class="btn btn-md btn-dark" onclick="init()">Restart game</button> <br>
-                <button class="btn btn-md btn-dark" onclick="changeLevel(1)">Easy</button>
-                <button class="btn btn-md btn-dark" onclick="changeLevel(2)">Medium</button>
-                <button class="btn btn-md btn-dark" onclick="changeLevel(3)">Extreme</button>
-            </div>
-            ​
-            <div>
-                <span class="timer">Time</span>
-            </div>
-            <footer>Mirit Gispan</footer>
-        </div>
-    </div>
-    <table class="board"></table>
-    <script src="js/utils.js"></script>
-    <script src="js/game.js"></script>
-    <script src="js/timer.js"></script>
-</body>
-
-</html>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="css/app.css">
+      <title>Mine Sweeper</title>
+  </head>
+  <body class="body" onload="init()" >
+     <h2 >Mirit's Mine Sweeper</h2>
+     <h1 class="game-status" >Lets Play:grinning:</h1>
+     <h1 class="lives" >Lives::heart::heart::heart: </h1>
+      <div class="board-container"></div>
+      <div class="modal">
+              <div class="row form">
+                  <div class="col-12">
+                      <button class="btn btn-md btn-dark" onclick="init()">Restart game</button> <br>
+                      <button class="btn btn-md btn-dark" onclick="changeLevel(1)">Easy</button>
+                      <button class="btn btn-md btn-dark" onclick="changeLevel(2)">Medium</button>
+                      <button class="btn btn-md btn-dark" onclick="changeLevel(3)">Extreme</button>
+                      <button class="btn dark-mode" onclick="darkMode()">Dark Mode</button>
+      </div>
+      <div>
+          <span class="timer">Time</span>
+      </div>
+      <div>
+          <span >Score: </span>
+          <span class="score">0</span>
+      </div>
+  </div>
+  </div>
+  <table class="board"></table>
+      <script src="js/utils.js"></script>
+      <script src="js/game.js"></script>
+      <script src="js/timer.js"></script>
+  </body>
+  </html>
